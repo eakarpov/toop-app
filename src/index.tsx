@@ -3,6 +3,13 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
+import { Promise } from 'bluebird';
+
+Promise.config({
+    longStackTraces: true,
+    warnings: true // note, run node with --trace-warnings to see full stack traces for warnings
+});
+global.Promise = Promise;
 
 ReactDOM.render(<App />, document.getElementById('root'));
 
