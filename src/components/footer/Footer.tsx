@@ -11,20 +11,20 @@ const Footer = ({ ...rest }) => (
                 direction="row"
                 justify="between"
                 border={{ side: "top", color: "light-4" }}
-                pad={{ top: "xlarge" }}
+                pad={{ top: "xsmall" }}
                 {...rest}
             >
-                <Box gap="large" align="start">
+                <Box gap="small" align="start">
                     <Box
                         gap="small"
                         direction="row-responsive"
                         align="center"
                         pad={{ horizontal: "small" }} // align with margin of icons from SocialMedia
                     >
-                        <Logo />
+                        {/*<Logo />*/}
                         {size !== "small" && size !== "xsmall" && (
-                            <Text weight="bold" size="large">
-                                App Teaser
+                            <Text weight="normal" size="large">
+                                See: M. Abadi, L. Cardelli. A theory of objects. – Springer Berlin, 1996.
                             </Text>
                         )}
                     </Box>
