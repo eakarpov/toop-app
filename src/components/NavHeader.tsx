@@ -1,6 +1,7 @@
 import * as React from 'react';
 import {Anchor, Box, ResponsiveContext, Text} from 'grommet';
 import {Logo} from './Logo';
+import {SocialMedia} from './SocialMedia';
 
 const NavHeader = () => (
     <ResponsiveContext.Consumer>
@@ -21,6 +22,7 @@ const NavHeader = () => (
                         size !== "small" && <Text size="large">App Teaser</Text>
                     }
                 />
+                <SocialMedia/>
             </Box>
         )}
     </ResponsiveContext.Consumer>
