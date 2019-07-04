@@ -15,11 +15,11 @@ const NavHeader = () => (
             >
                 <Anchor
                     href="/"
-                    icon={<Logo />}
+                    // icon={<Logo />}
                     color="black"
                     label={
                         size !== "xsmall" &&
-                        size !== "small" && <Text size="large">App Teaser</Text>
+                        size !== "small" && <Text size="large">Sigma Calculus Interpreter</Text>
                     }
                 />
                 <SocialMedia/>
