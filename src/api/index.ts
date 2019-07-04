@@ -8,8 +8,17 @@ class Api {
         const url = format({
             pathname: '.json',
         });
-
-        return await Connector.postApi(url, code, {}, '');
+        return await Connector.postApi(
+            url,
+            { code },
+            {
+                mode: 'no-cors',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            },
+            ''
+        );
     }
 }
 

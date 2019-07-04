@@ -14,10 +14,12 @@ export class SigmaPage extends Component {
             '\t].move 5',').x'
         ].join('\n'),
     };
+    public result: string = '';
 
     constructor(props: {}) {
         super(props);
         this.exec = this.exec.bind(this);
+        this.onChange = this.onChange.bind(this);
     }
 
     public editorDidMount(editor: monacoEditor.editor.IStandaloneCodeEditor, monaco: typeof monacoEditor) {
@@ -26,13 +28,15 @@ export class SigmaPage extends Component {
     }
 
     public onChange(newValue: string, e: monacoEditor.editor.IModelContentChangedEvent) {
-        console.log('onChange', newValue, e);
+        this.setState({
+            code: newValue,
+        });
     }
 
     public async exec() {
         try {
             const res = await API.execCode(this.state.code);
-            console.log(res);
+            this.result = res as string;
         } catch(e) {
             console.log(e);
         }
@@ -62,6 +66,7 @@ export class SigmaPage extends Component {
                 />
                 <Box align='start' margin="medium">
                     <Button label='Eval' onClick={this.exec} />
+                    {this.result && <p>Result: {this.result}</p>}
                 </Box>
             </Box>
         );
