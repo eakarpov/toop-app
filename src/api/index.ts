@@ -1,18 +1,18 @@
-import {Connector, initConnect} from "ts-shelf";
+import {Connector, initConnect, NetworkError} from 'ts-shelf';
 import {format} from "url";
 
-initConnect('toop-sigma.herokuapp.com');
+//initConnect('toop-sigma.herokuapp.com');
+initConnect('localhost:9000', false);
 
 class Api {
-    public async execCode(code: string) {
+    public async execCode(code: string): Promise<{ termString: string }> {
         const url = format({
             pathname: '.json',
         });
-        return await Connector.postApi(
+        return await Connector.postApi<{ termString: string }>(
             url,
-            { code },
+            {code},
             {
-                mode: 'no-cors',
                 headers: {
                     'Content-Type': 'application/json',
                 },

@@ -1,6 +1,5 @@
 import * as React from 'react';
 import {Anchor, Box, ResponsiveContext, Text} from 'grommet';
-import {Logo} from './Logo';
 import {SocialMedia} from './SocialMedia';
 
 const NavHeader = () => (
@@ -11,16 +10,15 @@ const NavHeader = () => (
                 justify="between"
                 alignSelf="center"
                 gap="medium"
-                pad={{ top: "large", horizontal: "xlarge" }}
+                pad={{top: 'large', horizontal: 'xlarge'}}
             >
                 <Anchor
                     href="/"
                     // icon={<Logo />}
                     color="black"
-                    label={
-                        size !== "xsmall" &&
-                        size !== "small" && <Text size="large">Sigma Calculus Interpreter</Text>
-                    }
+                    label={<Text size={(size !== 'xsmall' && size !== 'small') ? 'large' : 'small'}>
+                        Sigma Calculus Interpreter
+                    </Text>}
                 />
                 <SocialMedia/>
             </Box>
@@ -28,4 +26,4 @@ const NavHeader = () => (
     </ResponsiveContext.Consumer>
 );
 
-export { NavHeader };
+export {NavHeader};

@@ -2,7 +2,6 @@ import React from "react";
 import { Box, ResponsiveContext, Text } from "grommet";
 
 import { FooterContent } from "./FooterContent";
-import {Logo} from '../Logo';
 
 const Footer = ({ ...rest }) => (
     <ResponsiveContext.Consumer>
@@ -21,12 +20,11 @@ const Footer = ({ ...rest }) => (
                         align="center"
                         pad={{ horizontal: "small" }} // align with margin of icons from SocialMedia
                     >
-                        {/*<Logo />*/}
-                        {size !== "small" && size !== "xsmall" && (
-                            <Text weight="normal" size="large">
-                                See: M. Abadi, L. Cardelli. A theory of objects. – Springer Berlin, 1996.
-                            </Text>
-                        )}
+                        <Text weight="normal" size={(size !== 'small' && size !== 'xsmall') ? 'large' : 'small'}>
+                            See: <a href="http://lucacardelli.name/TheoryOfObjects.html">
+                            M. Abadi, L. Cardelli. A theory of objects. – Springer Berlin, 1996.
+                        </a>
+                        </Text>
                     </Box>
                 </Box>
                 <FooterContent />

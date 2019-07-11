@@ -1,9 +1,9 @@
 import {Component} from 'react';
 import * as React from 'react';
-import MonacoEditor from "react-monaco-editor";
-import * as monacoEditor from "monaco-editor";
-import {Box, Button, Grid} from "grommet";
-import {API} from "../api";
+import MonacoEditor from 'react-monaco-editor';
+import * as monacoEditor from 'monaco-editor';
+import {Box, Button, ResponsiveContext} from 'grommet';
+import {API} from '../api';
 
 export class SigmaPage extends Component {
     public state = {
@@ -11,10 +11,11 @@ export class SigmaPage extends Component {
             '\t[',
             '\t\tx = @ this => 0,',
             '\t\tmove = @ this => \\dx => this.x := this.x + dx',
-            '\t].move 5',').x'
+            '\t].move 5', ').x',
         ].join('\n'),
+        result: '',
+        error: '',
     };
-    public result: string = '';
 
     constructor(props: {}) {
         super(props);
@@ -35,9 +36,19 @@ export class SigmaPage extends Component {
 
     public async exec() {
         try {
-            const res = await API.execCode(this.state.code);
-            this.result = res as string;
-        } catch(e) {
+            const res: { errorMessage?: string; termString?: string } = await API.execCode(this.state.code);
+            if ('errorMessage' in res) {
+                this.setState({
+                    error: res.errorMessage,
+                    result: '',
+                });
+            } else {
+                this.setState({
+                    error: '',
+                    result: res.termString,
+                });
+            }
+        } catch (e) {
             console.log(e);
         }
     }
@@ -45,30 +56,33 @@ export class SigmaPage extends Component {
     public render() {
         const code = this.state.code;
         const options = {
-            selectOnLineNumbers: true
+            selectOnLineNumbers: true,
         };
         return (
-            <Box
-                direction="row"
-                justify="between"
-                border={{ side: "top", color: "light-4" }}
-                pad={{ top: "xsmall" }}
-            >
-                <MonacoEditor
-                    width="800"
-                    height="600"
-                    language="text"
-                    theme="vs"
-                    value={code}
-                    options={options}
-                    onChange={this.onChange}
-                    editorDidMount={this.editorDidMount}
-                />
-                <Box align='start' margin="medium">
-                    <Button label='Eval' onClick={this.exec} />
-                    {this.result && <p>Result: {this.result}</p>}
-                </Box>
-            </Box>
+            <ResponsiveContext.Consumer>
+                {size => (<Box
+                    direction={(size !== 'small' && size !== 'xsmall' && size !== 'medium') ? 'row' : 'column'}
+                    justify="between"
+                    border={{side: 'top', color: 'light-4'}}
+                    pad={{top: 'xsmall'}}
+                >
+                    <MonacoEditor
+                        width="800"
+                        height="600"
+                        language="text"
+                        theme="vs"
+                        value={code}
+                        options={options}
+                        onChange={this.onChange}
+                        editorDidMount={this.editorDidMount}
+                    />
+                    <Box align='start' margin="medium">
+                        <Button label='Eval' onClick={this.exec}/>
+                        {this.state.result && <p style={{wordBreak: 'break-word'}}>Result: {this.state.result}</p>}
+                        {this.state.error && <p style={{wordBreak: 'break-word'}}>Error: {this.state.error}</p>}
+                    </Box>
+                </Box>)}
+            </ResponsiveContext.Consumer>
         );
     }
 }
